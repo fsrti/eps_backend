@@ -6,6 +6,7 @@ let bodyParser = require('body-parser');
 let cors =require('cors');
 
 let Registration = require('./models/registration');
+let Manuscript = require('./models/manuscript');
 
 // ******** DB Connection ********
 mongoose.Promise = Promise;
@@ -67,6 +68,17 @@ app.post('/register', (req, res) => {
   });
 });
 
+app.post('/manuscript',(req,res)=>{
+    var manuscriptData = req.body;
+    var manuscript=new Manuscript(manuscriptData);
+    manuscript.save((err, newuser) => {
+        if (err)
+        res.json({success:false, msg: 'failed to write in manuscript'});
+        else
+        res.status(200).send(newuser);
+    });
+
+});
 
 
 
