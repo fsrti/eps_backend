@@ -1,15 +1,14 @@
-const users = require('./auth.schema')
+const users = require('./user')
 const bodyParser = require('body-parser')
 const mongoose = require('../db/connection')
-const app = require('../app')
+const express= require('express')
+const app = express()
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(bodyParser.json())
-app.use(mongoose);
+//app.use(mongoose);
 const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, res, next) => {
     try {
-      const user = await users.findOne({
-        username: req.body.username,
-      });
+      const user = await users.findOne({ username: req.body.username});
       if (isError(user)) {
         res.status(errorCode);
         next(new Error(defaultLoginError));
