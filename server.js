@@ -1,3 +1,4 @@
+
 const express = require('express')
 
 let mongoose = require('mongoose');
@@ -102,6 +103,9 @@ app.post('/manuscript',(req,res)=>{
 // ******* Express Server **********
 
 
-const port = process.env.PORT||3000;
+=======
+const app = require('./src/app');
+app.get('/', (req, res) => res.send('Hello World!'))
 
+const port = process.env.PORT||3000;
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
