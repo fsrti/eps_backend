@@ -36,9 +36,10 @@ const get = (req, res) => {
 
 const signup = async (req, res, next) => {
   try {
-   
+  const hashed = await bcrypt.hash(req.body.password, 12);
+  console.log(`hashed `+hashed);
   let userData = req.body;
-  console.log(userData);
+  userData.password=hashed;
   let user = new users(userData);
      user.save((err, newuser) => {
       if (err)
@@ -57,18 +58,22 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  console.log(req.body.password);
+  console.log(req.loggingInUser.password);
   try {
     const result = await bcrypt.compare(
       req.body.password,
       req.loggingInUser.password,
     );
+    console.log(`result`+result);
     if (result) {
       createTokenSendResponse(req.loggingInUser, res, next);
     } else {
       res.status(422);
       throw new Error('Unable to login');
     }
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(res.statusCode === 200 ? 500 : res.statusCode);
     next(error);
   }
