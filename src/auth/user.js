@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const registrationSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
     {
         username: {
             type: String
@@ -61,5 +61,5 @@ const registrationSchema = new mongoose.Schema(
 
     }
 );
-const Registration = mongoose.model('registration',registrationSchema);
-module.exports = Registration;
+const User = mongoose.model('user',userSchema);
+module.exports = User;

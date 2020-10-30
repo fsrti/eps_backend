@@ -1,7 +1,15 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-const users = require('./auth.schema');
+const bodyParser = require('body-parser')
+const users = require('./user');
+const express= require('express')
+const app = express()
+const router = express.Router();
+// router.use(bodyParser.json());
+// router.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: false })) 
+// app.use(bodyParser.json())
+// app.use(express.json)
 
 const createTokenSendResponse = (user, res, next) => {
   const payload = {
@@ -12,7 +20,7 @@ const createTokenSendResponse = (user, res, next) => {
   };
   jwt.sign(
     payload,
-    process.env.TOKEN_SECRET, {
+    '123', {
       expiresIn: '10 years',
     }, (err, token) => {
       if (err) {
@@ -35,22 +43,16 @@ const get = (req, res) => {
 
 const signup = async (req, res, next) => {
   try {
-   // const hashed = await bcrypt.hash(req.body.password, 12);
-
-   /* const newUser = {
-      username: req.body.username,
-      password: hashed,
-      role: 'user',
-      active: true,
-    };*/
-       
-  var userData = req.body;
-  var user = new users(userData);
-    const insertedUser =  user.save((err, newuser) => {
+   
+  let userData = req.body;
+  console.log(userData);
+  let user = new users(userData);
+     user.save((err, newuser) => {
       if (err)
       res.json({success:false, msg: 'failed to register user'});
-
-      createTokenSendResponse(insertedUser, res, next);
+      else
+      res.status(200).json({newuser})
+      //createTokenSendResponse(newuser, res, next);
 
   });
    

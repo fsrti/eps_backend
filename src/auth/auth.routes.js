@@ -13,13 +13,13 @@ router.get('/', controller.get);
 router.post(
   '/signup',
   //middlewares.validateUser(),
-  middlewares.findUser(signInError, (user) => user, 409),
+ // middlewares.findUser(signInError, (user) => user, 409),
   controller.signup,
 );
 router.post(
   '/login',
   //middlewares.validateUser(defaultLoginError),
-  middlewares.findUser(defaultLoginError, (user) => !(user && user.active)),
+  //middlewares.findUser(defaultLoginError, (user) => !(user && user.active)),
   controller.login,
 );
 
