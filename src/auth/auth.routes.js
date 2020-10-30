@@ -8,19 +8,27 @@ const router = express.Router();
 
 const defaultLoginError = 'Unable to login';
 const signInError = 'That username is not unique. Please choose another one.';
+var bodyParser = require('body-parser')
+
+// create application/json parser
+var jsonParser = bodyParser.json()
+
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/', controller.get);
 router.post(
-  '/signup',
+  '/signup',jsonParser,
   //middlewares.validateUser(),
- // middlewares.findUser(signInError, (user) => user, 409),
+ middlewares.findUser(signInError, (user) => user, 409),
   controller.signup,
 );
 router.post(
-  '/login',
-  //middlewares.validateUser(defaultLoginError),
-  //middlewares.findUser(defaultLoginError, (user) => !(user && user.active)),
+  '/login',jsonParser,
+ // middlewares.validateUser(defaultLoginError),
+  middlewares.findUser(defaultLoginError, (user) => !(user && user.active)),
   controller.login,
+
 );
 
 module.exports = router;

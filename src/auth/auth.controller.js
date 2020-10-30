@@ -1,15 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const bodyParser = require('body-parser')
 const users = require('./user');
-const express= require('express')
-const app = express()
-const router = express.Router();
-// router.use(bodyParser.json());
-// router.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.urlencoded({ extended: false })) 
-// app.use(bodyParser.json())
-// app.use(express.json)
+
+
 
 const createTokenSendResponse = (user, res, next) => {
   const payload = {
@@ -50,9 +43,9 @@ const signup = async (req, res, next) => {
      user.save((err, newuser) => {
       if (err)
       res.json({success:false, msg: 'failed to register user'});
-      else
-      res.status(200).json({newuser})
-      //createTokenSendResponse(newuser, res, next);
+      // else
+      // res.status(200).json({newuser})
+      createTokenSendResponse(newuser, res, next);
 
   });
    
