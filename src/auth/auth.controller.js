@@ -8,8 +8,8 @@ const createTokenSendResponse = (user, res, next) => {
   const payload = {
     _id: user._id,
     username: user.username,
-    role: user.role,
-    active: user.active,
+    // role: user.role,
+    // active: user.active,
   };
   jwt.sign(
     payload,
@@ -21,8 +21,9 @@ const createTokenSendResponse = (user, res, next) => {
         const error = Error('Unable to login');
         next(error);
       } else {
-      // login all good
-        res.json({ token });
+       console.log(token);
+       res.json({ token });
+       
       }
     },
   );
@@ -37,17 +38,20 @@ const get = (req, res) => {
 const signup = async (req, res, next) => {
   try {
   const hashed = await bcrypt.hash(req.body.password, 12);
-  console.log(`hashed `+hashed);
+  
+  console.log(req.body.username);
   let userData = req.body;
   userData.password=hashed;
   let user = new users(userData);
      user.save((err, newuser) => {
       if (err)
+      { 
+      console.log(err)
       res.json({success:false, msg: 'failed to register user'});
-      // else
-      // res.status(200).json({newuser})
+      }
+      else
+      res.status(200).json({newuser})
       createTokenSendResponse(newuser, res, next);
-
   });
    
     
