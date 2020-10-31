@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, res, next) => {
     try {
       const user = await users.findOne({ username: req.body.username});
-      //console.log(user);
+      console.log(user);
       if (isError(user)) {
         res.status(errorCode);
         next(new Error(defaultLoginError));
