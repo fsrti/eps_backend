@@ -1,43 +1,10 @@
-
-const express = require('express')
-
-let mongoose = require('mongoose');
-
 let bodyParser = require('body-parser');
 let cors =require('cors');
 
-let Registration = require('./models/registration');
+let User = require('./src/auth/user');
 let Manuscript = require('./models/manuscript');
+const app = require('./src/app');
 
-// ******** DB Connection ********
-mongoose.Promise = Promise;
-
-let dbOptions = {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true, auto_reconnect: true};
-
-mongoose.connect("mongodb+srv://fsrti:fsrti@cluster0.g5swe.mongodb.net/eps?retryWrites=true&w=majority", dbOptions);
-
-
-mongoose.connection.on('connected', function(){
-
-    console.log("Connected to DB");
-
-})
-
-mongoose.connection.on('error', function(err){
-
-    console.log("Error while connecting to DB: " + err);
-
-})
-
-// ******** DB Connection ********
-
-
-
-
-
-
-
-const app = express()
 
 // parse application/x-www-form-urlencoded
 
@@ -57,11 +24,11 @@ app.use(cors());
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.post('/register', (req, res) => {
+app.post('/signup', (req, res) => {
    
   var userData = req.body;
   
-  var user = new Registration(userData);
+  var user = new User(userData);
   user.save((err, newuser) => {
       if (err)
       res.json({success:false, msg: 'failed to register user'});
@@ -103,8 +70,7 @@ app.post('/manuscript',(req,res)=>{
 // ******* Express Server **********
 
 
-=======
-const app = require('./src/app');
+
 app.get('/', (req, res) => res.send('Hello World!'))
 
 const port = process.env.PORT||3000;
