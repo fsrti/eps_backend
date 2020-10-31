@@ -8,8 +8,8 @@ const createTokenSendResponse = (user, res, next) => {
   const payload = {
     _id: user._id,
     username: user.username,
-    // role: user.role,
-    // active: user.active,
+    //role: user.role,
+    //active: user.active,
   };
   jwt.sign(
     payload,
@@ -48,10 +48,17 @@ const signup = async (req, res, next) => {
       { 
       console.log(err)
       res.json({success:false, msg: 'failed to register user'});
+<<<<<<< HEAD
       }
       else
       res.status(200).json({newuser})
       createTokenSendResponse(newuser, res, next);
+=======
+      // else
+      // res.status(200).json({newuser})
+      //createTokenSendResponse(newuser, res, next);
+
+>>>>>>> 257cbfef92f9eaf8fa23b59bece745c1363574de
   });
    
     
