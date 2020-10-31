@@ -6,7 +6,7 @@ const middlewares = require('./auth.middlewares');
 const router = express.Router();
 // any route in here is pre-pended with /auth
 
-const defaultLoginError = 'hello world';
+const defaultLoginError = 'Unable to Login';
 const signInError = 'That username is not unique. Please choose another one.';
 var bodyParser = require('body-parser')
 
