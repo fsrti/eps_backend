@@ -38,7 +38,6 @@ const get = (req, res) => {
 const signup = async (req, res, next) => {
   try {
   const hashed = await bcrypt.hash(req.body.password, 12);
-  
   console.log(req.body.username);
   let userData = req.body;
   userData.password=hashed;
@@ -48,9 +47,6 @@ const signup = async (req, res, next) => {
       { 
       console.log(err)
       res.json({success:false, msg: 'failed to register user'});
-      // else
-      // res.status(200).json({newuser})
-      //createTokenSendResponse(newuser, res, next);
       }
   });
    
