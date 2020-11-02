@@ -23,7 +23,6 @@ const createTokenSendResponse = (user, res, next) => {
       } else {
        console.log(token);
        res.json({ token });
-       
       }
     },
   );
@@ -47,6 +46,10 @@ const signup = async (req, res, next) => {
       { 
       console.log(err)
       res.json({success:false, msg: 'failed to register user'});
+      }
+      else
+      {
+        res.json({success:true});
       }
   });
    
