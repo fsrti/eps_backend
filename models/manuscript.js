@@ -24,8 +24,12 @@ const manuscriptSchema = new mongoose.Schema(
             type: String
         },
         auth_email: {
-            type: String,
+            type: String
             
+        },
+        comments:
+        {
+            type:String
         }
         
     }
