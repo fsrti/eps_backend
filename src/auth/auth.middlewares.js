@@ -15,7 +15,6 @@ const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, re
         next(new Error(defaultLoginError));
       } else {
         req.loggingInUser = user;
-      //  console.log(`pass `+req.loggingInUser.password)
         next();
       }
     } catch (error) {
