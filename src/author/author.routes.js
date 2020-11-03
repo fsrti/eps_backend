@@ -15,7 +15,7 @@ router.get('/', controller.get);
 // router.use(authmiddlewares.checkTokenSetUser);
 router.post(
   '/newsubmission',jsonParser,
-  authmiddlewares.checkTokenSetUser,
+ authmiddlewares.checkTokenSetUser,
   authmiddlewares.isLoggedIn,
   controller.newsubmissionData,
 
