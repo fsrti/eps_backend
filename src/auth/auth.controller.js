@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const users = require('./user');
 
-
+const transporter = require('../utilities/nodemailer');
 
 const createTokenSendResponse = (user, res, next) => {
   const payload = {
@@ -21,6 +21,28 @@ const createTokenSendResponse = (user, res, next) => {
         const error = Error('Unable to login');
         next(error);
       } else {
+        const emailHTMLContent  = `
+          <h1>JISST</h1>
+          <hr>
+          <h3>You're receiving this message because of a successful sign-in</h3>
+          <br>
+          <p>
+            Thanks,<br>
+            Journal of Innovation Sciences and Sustainable Technologies
+          </p>
+        `
+        transporter.sendMail({
+          from: 'JISST<fsrti.com@gmail.com>',
+          to: user.email,
+          subject: `JISST - Successful sign-in for ${user.firstname} ${user.lastname}`,
+          html: emailHTMLContent,
+        },(err,res)=> {
+          if(err){
+            console.log(err);
+          } else {
+            console.log('Email Sent');
+          }
+        })
        console.log(token);
        res.json({ token });
       }
@@ -49,6 +71,30 @@ const signup = async (req, res, next) => {
       }
       else
       {
+        console.log(newuser);
+        const emailHTMLContent  = `
+        <h1>JISST</h1>
+        <hr>
+        <h3>We are happy to see you here!</h3>
+        <br>
+        <p>
+          Thanks,<br>
+          Journal of Innovation Sciences and Sustainable Technologies
+        </p>
+      `
+      transporter.sendMail({
+        from: 'JISST<fsrti.com@gmail.com>',
+        to: newuser.email,
+        subject: `Welcome to JISST`,
+        html: emailHTMLContent,
+      },(err,res)=> {
+        if(err){
+          console.log(err);
+        } else {
+          console.log('Email Sent');
+        }
+      })
+
         res.json({success:true});
       }
   });
