@@ -8,8 +8,8 @@ const createTokenSendResponse = (user, res, next) => {
   const payload = {
     _id: user._id,
     username: user.username,
-    role: user.role,
-    active: user.active,
+    //role: user.role,
+    //active: user.active,
   };
   jwt.sign(
     payload,
@@ -21,8 +21,8 @@ const createTokenSendResponse = (user, res, next) => {
         const error = Error('Unable to login');
         next(error);
       } else {
-      // login all good
-        res.json({ token });
+       console.log(token);
+       res.json({ token });
       }
     },
   );
@@ -36,17 +36,21 @@ const get = (req, res) => {
 
 const signup = async (req, res, next) => {
   try {
-   
+  const hashed = await bcrypt.hash(req.body.password, 12);
+  console.log(req.body.username);
   let userData = req.body;
-  console.log(userData);
+  userData.password=hashed;
   let user = new users(userData);
      user.save((err, newuser) => {
       if (err)
+      { 
+      console.log(err)
       res.json({success:false, msg: 'failed to register user'});
-      // else
-      // res.status(200).json({newuser})
-      createTokenSendResponse(newuser, res, next);
-
+      }
+      else
+      {
+        res.json({success:true});
+      }
   });
    
     
@@ -57,18 +61,22 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  console.log(req.body.password);
+  console.log(req.loggingInUser.password);
   try {
     const result = await bcrypt.compare(
       req.body.password,
       req.loggingInUser.password,
     );
+    console.log(`result`+result);
     if (result) {
       createTokenSendResponse(req.loggingInUser, res, next);
     } else {
       res.status(422);
       throw new Error('Unable to login');
     }
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(res.statusCode === 200 ? 500 : res.statusCode);
     next(error);
   }

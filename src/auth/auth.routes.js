@@ -6,11 +6,12 @@ const middlewares = require('./auth.middlewares');
 const router = express.Router();
 // any route in here is pre-pended with /auth
 
-const defaultLoginError = 'Unable to login';
+const defaultLoginError = 'Unable to Login';
 const signInError = 'That username is not unique. Please choose another one.';
 var bodyParser = require('body-parser')
 
 // create application/json parser
+
 var jsonParser = bodyParser.json()
 
 // create application/x-www-form-urlencoded parser
@@ -26,7 +27,7 @@ router.post(
 router.post(
   '/login',jsonParser,
  // middlewares.validateUser(defaultLoginError),
-  middlewares.findUser(defaultLoginError, (user) => !(user && user.active)),
+  middlewares.findUser(defaultLoginError, (user) => !(user)),
   controller.login,
 
 );
