@@ -14,19 +14,16 @@ var bodyParser = require('body-parser')
 
 var jsonParser = bodyParser.json()
 
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 
 router.get('/', controller.get);
 router.post(
   '/signup',jsonParser,
-  //middlewares.validateUser(),
  middlewares.findUser(signInError, (user) => user, 409),
   controller.signup,
 );
 router.post(
   '/login',jsonParser,
- // middlewares.validateUser(defaultLoginError),
   middlewares.findUser(defaultLoginError, (user) => !(user)),
   controller.login,
 
