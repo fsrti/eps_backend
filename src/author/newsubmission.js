@@ -8,25 +8,33 @@ const newsubmissionSchema = new mongoose.Schema(
         title: {
             type: String
         },
-        
-        auth_firstname: {
-            type: String
+        authorsData:[
+           {
+                auth_firstname:String,
+                auth_lastname:String,
+                auth_middlename:String, 
+                author_email:String,
+                degree:String,
+                affiliation:String
+        }
+        ]
+        ,
+        comments:{
+            type:String
         },
-        auth_middlename: {
-            type: String
+        checkauthor:
+        {
+            type:Boolean,
+            default:false
+        }
+        ,
+        isDualPublicationStatement:{
+            type:Boolean,
+            default:false
         },
-        auth_lastname: {
-            type: String
-        },
-        auth_degree: {
-            type: String
-        },
-        auth_affiliation: {
-            type: String
-        },
-        auth_email: {
-            type: String,
-            
+        isFunded:{
+            type:Boolean,
+            default:false
         }
         
     }
