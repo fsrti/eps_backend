@@ -16,9 +16,16 @@ const newsubmissionSchema = new mongoose.Schema(
                 author_email:String,
                 degree:String,
                 affiliation:String
-        }
+           }
         ]
         ,
+        storedisplayfiles:[
+            {
+                sel: String,
+                avatar: String,
+                cloudinary_id: String  
+            }
+         ],
         comments:{
             type:String
         },
