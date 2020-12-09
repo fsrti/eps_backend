@@ -19,8 +19,6 @@ router.post(
 );
 router.post(
   '/newfilesubmission', jsonParser,upload.single("image"),
-  authmiddlewares.checkTokenSetUser,
-  authmiddlewares.isLoggedIn,
   controller.newfilesubmissionData,
 );
 

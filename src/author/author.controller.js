@@ -49,12 +49,7 @@ const get = (req, res) => {
     console.log(`upload plzzz`);
     console.log(`result`+result);
     delete req.body.image;
-<<<<<<< HEAD
-    let newsubmission = new Newsubmission({
-      ref_id:req.body.userId,
-=======
     let newfilesubmission = new NewFilesubmission({
->>>>>>> 17c6fa0de067002b4b40a6663fded3e11c0da604
       avatar : result.secure_url,
       cloudinary_id: result.public_id,
     });
@@ -75,9 +70,8 @@ const get = (req, res) => {
       next(error);
     }
     
+
   };
-
-
   module.exports = {
     get,
     newsubmissionData,
