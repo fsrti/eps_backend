@@ -12,7 +12,7 @@ var jsonParser = bodyParser.json()
 
 router.get('/', controller.get);
 router.post(
-  '/newsubmission',upload.single("image"), jsonParser,
+  '/newsubmission', jsonParser,upload.single("image"),
   authmiddlewares.checkTokenSetUser,
   authmiddlewares.isLoggedIn,
   controller.newsubmissionData,
