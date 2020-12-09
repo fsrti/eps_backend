@@ -1,7 +1,7 @@
 const Newsubmission = require('./newsubmission');
 const cloudinary=require("../utilities/cloudinary");
 const upload=require("../utilities/multer");
-const { any } = require('../utilities/multer');
+
 
 const get = (req, res) => {
     res.json({
@@ -18,12 +18,12 @@ const get = (req, res) => {
     let result;
     if(req.file)
      result = await cloudinary.uploader.upload(req.file.path);
-
     else
     console.log(`upload plzzz`);
     console.log(`result`+result);
     delete req.body.image;
     let newsubmission = new Newsubmission({
+      ref_id:req.body.userId,
       avatar : result.secure_url,
       cloudinary_id: result.public_id,
     });

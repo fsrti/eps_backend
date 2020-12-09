@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const newsubmissionSchema = new mongoose.Schema(
     {
-        
+        ref_id: {
+            type: String
+        },
         article_type: {
             type: String
         },
