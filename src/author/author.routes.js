@@ -11,6 +11,8 @@ var jsonParser = bodyParser.json()
 
 
 router.get('/', controller.get);
+
+
 router.post(
   '/newsubmission', jsonParser,
   authmiddlewares.checkTokenSetUser,

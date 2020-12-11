@@ -48,6 +48,39 @@ const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, re
     }
   };
 
+
+  const findId = (defaultLoginError, isError, errorCode = 422) => async (req, res, next) => {
+    try {
+      const user = await users.findOne({ username: req.params.username});
+      console.log('find user'+user);
+      if (isError(user)) {
+        res.status(errorCode);
+        next(new Error(defaultLoginError));
+      } else {
+        id = user._id;
+        console.log(`id `+id);
+        res.send(id);
+      }
+    } catch (error) {
+      res.status(500);
+      next(error);
+    }
+  };
+
+//   userApp.get('/search/:username', (req, res) => {
+//     // var userCollectionObj = dbo.getDb().userCollectionObj;
+//     var userCollectionObj=req.app.locals.usercollection;
+//     userCollectionObj.findOne({ username: req.params.username }, (err, success) => {
+//         if (err) {
+//             return res.status(404).end();
+//         } if (success) {
+//             return res.status(200).send({ message: "username already exists" });
+//         } else {
+//             return res.status(200).send({ message: "valid username" });
+//         }
+//     });
+// });
+
   function isLoggedIn(req, res, next) {
     // checkTokenSetUser(req,res,next);
     if (req.user) {
@@ -66,5 +99,6 @@ const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, re
 module.exports={
     findUser,
     isLoggedIn,
-    checkTokenSetUser
+    checkTokenSetUser,
+    findId
 }

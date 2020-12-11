@@ -28,5 +28,8 @@ router.post(
   controller.login,
 
 );
+router.get('/search/:username',jsonParser,
+middlewares.findId(defaultLoginError,(user)=>!(user)));
+ 
 
 module.exports = router;
