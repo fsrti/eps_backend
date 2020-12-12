@@ -8,7 +8,7 @@ var bodyParser = require('body-parser')
 // create application/json parser
 
 var jsonParser = bodyParser.json()
-
+const defaultLoginError = 'USER NOT FOUND';
 
 router.get('/', controller.get);
 
@@ -24,6 +24,14 @@ router.post(
   controller.newfilesubmissionData,
 );
 
+router.get('/newsubmission/:id', jsonParser,
+  authmiddlewares.checkTokenSetUser,
+  authmiddlewares.findNewsubmission(defaultLoginError, (user) => !(user))
+);
 
+router.get('/newfilesubmission/:id', jsonParser,
+ // authmiddlewares.checkTokenSetUser,
+  authmiddlewares.findNewfilesubmission(defaultLoginError, (user) => !(user))
+);
 
 module.exports = router;
