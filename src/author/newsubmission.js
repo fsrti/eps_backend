@@ -10,12 +10,6 @@ const newsubmissionSchema = new mongoose.Schema(
         title: {
             type: String
         },
-        avatar: {
-            type: String
-        },
-        cloudinary_id: {
-            type: String
-        },
         authorsData:[
            {
                 auth_firstname:String,
@@ -27,13 +21,6 @@ const newsubmissionSchema = new mongoose.Schema(
            }
         ]
         ,
-        storedisplayfiles:
-            {
-                sel: String,
-                avatar: String,
-                cloudinary_id: String  
-            }
-         ,
         comments:{
             type:String
         },
