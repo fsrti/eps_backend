@@ -59,27 +59,13 @@ const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, re
       } else {
         id = user._id;
         console.log(`id `+id);
-        res.send(id);
+        res.json({ id });
       }
     } catch (error) {
       res.status(500);
       next(error);
     }
   };
-
-//   userApp.get('/search/:username', (req, res) => {
-//     // var userCollectionObj = dbo.getDb().userCollectionObj;
-//     var userCollectionObj=req.app.locals.usercollection;
-//     userCollectionObj.findOne({ username: req.params.username }, (err, success) => {
-//         if (err) {
-//             return res.status(404).end();
-//         } if (success) {
-//             return res.status(200).send({ message: "username already exists" });
-//         } else {
-//             return res.status(200).send({ message: "valid username" });
-//         }
-//     });
-// });
 
   function isLoggedIn(req, res, next) {
     // checkTokenSetUser(req,res,next);
