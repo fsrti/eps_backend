@@ -57,6 +57,10 @@ const userSchema = new mongoose.Schema(
         country: {
             type: String,
             
+        },
+        resetLink:{
+            type:String,
+            default:'',
         }
 
     }
