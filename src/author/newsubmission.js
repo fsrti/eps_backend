@@ -1,11 +1,19 @@
 const mongoose = require('mongoose');
 const newsubmissionSchema = new mongoose.Schema(
     {
-        
+        ref_id: {
+            type: String
+        },
         article_type: {
             type: String
         },
         title: {
+            type: String
+        },
+        avatar: {
+            type: String
+        },
+        cloudinary_id: {
             type: String
         },
         authorsData:[
@@ -16,9 +24,16 @@ const newsubmissionSchema = new mongoose.Schema(
                 author_email:String,
                 degree:String,
                 affiliation:String
-        }
+           }
         ]
         ,
+        storedisplayfiles:
+            {
+                sel: String,
+                avatar: String,
+                cloudinary_id: String  
+            }
+         ,
         comments:{
             type:String
         },
