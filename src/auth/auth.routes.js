@@ -20,16 +20,20 @@ var jsonParser = bodyParser.json()
 
 router.get('/', controller.get);
 router.post(
-  '/signup',jsonParser,
- middlewares.findUser(signInError, (user) => user, 409),
+  '/signup', jsonParser,
+  middlewares.findUser(signInError, (user) => user, 409),
   controller.signup,
 );
 router.post(
-  '/login',jsonParser,
+  '/login', jsonParser,
   middlewares.findUser(defaultLoginError, (user) => !(user)),
   controller.login,
 
 );
+router.get('/search/:username', jsonParser,
+  middlewares.findId(defaultLoginError, (user) => !(user))
+);
+
 
 //forget password
 router.post('/forgotpassword',jsonParser,controller.forgotPassword);
