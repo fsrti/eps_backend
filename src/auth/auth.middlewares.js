@@ -1,4 +1,6 @@
 const users = require('./user')
+const Newsubmission = require('../author/newsubmission');
+const Newfilesubmission=require('../author/newfilesubmission');
 const bodyParser = require('body-parser')
 const mongoose = require('../db/connection') //DB connection
 const express= require('express')
@@ -7,6 +9,7 @@ const jwt = require('jsonwebtoken');
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(bodyParser.json())
 
+let id;
 function checkTokenSetUser(req, res, next) {
   const authHeader = req.get('Authorization');
   if (authHeader) {
@@ -48,8 +51,62 @@ const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, re
     }
   };
 
+
+  const findId = (defaultLoginError, isError, errorCode = 422) => async (req, res, next) => {
+    try {
+      const user = await users.findOne({ username: req.params.username});
+      if (isError(user)) {
+        res.status(errorCode);
+        next(new Error(defaultLoginError));
+      } else {
+        id = user._id;
+        console.log(`find id `+id);
+        res.json({ id });
+      }
+    } catch (error) {
+      res.status(500);
+      next(error);
+    }
+  };
+
+  const findNewsubmission = (defaultLoginError, isError, errorCode = 422) => async (req, res, next) => {
+    try {
+      const user = await Newsubmission.findOne({ ref_id: req.params.id});
+      
+      console.log('find new sub '+user);
+      if (isError(user)) {
+        res.status(errorCode);
+        next(new Error(defaultLoginError));
+      } else {
+        title= user.title;
+        console.log(`title `+user);
+        res.json( JSON.stringify(user) );
+      }
+    } catch (error) {
+      res.status(500);
+      next(error);
+    }
+  };
+
+  const findNewfilesubmission = (defaultLoginError, isError, errorCode = 422) => async (req, res, next) => {
+    try {
+      const userFile = await Newfilesubmission.findOne({ ref_id: req.params.id});
+      console.log('find new sub '+userFile);
+      if (isError(userFile)) {
+        res.status(errorCode);
+        next(new Error(defaultLoginError));
+      } else {
+        title= userFile.avatar;
+        console.log(`title `+userFile);
+        res.json( JSON.stringify(userFile) );
+      }
+    } catch (error) {
+      res.status(500);
+      next(error);
+    }
+  };
+
   function isLoggedIn(req, res, next) {
-    // checkTokenSetUser(req,res,next);
     if (req.user) {
       console.log('in login method');
       next();
@@ -66,5 +123,8 @@ const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, re
 module.exports={
     findUser,
     isLoggedIn,
-    checkTokenSetUser
+    checkTokenSetUser,
+    findId,
+    findNewsubmission,
+    findNewfilesubmission
 }
