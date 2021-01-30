@@ -2,6 +2,8 @@ const express = require('express');
 
 const controller = require('./auth.controller');
 const middlewares = require('./auth.middlewares');
+const forgotPassword = require('./auth.controller');
+const resetPassword = require('./auth.controller');
 
 const router = express.Router();
 // any route in here is pre-pended with /auth
@@ -9,7 +11,7 @@ const router = express.Router();
 const defaultLoginError = 'Unable to Login';
 const signInError = 'That username is not unique. Please choose another one.';
 var bodyParser = require('body-parser')
-
+var user = require('./user');
 // create application/json parser
 
 var jsonParser = bodyParser.json()
@@ -32,5 +34,9 @@ router.get('/search/:username', jsonParser,
   middlewares.findId(defaultLoginError, (user) => !(user))
 );
 
+
+//forget password
+router.post('/forgotpassword',jsonParser,controller.forgotPassword);
+router.post('/resetpassword',jsonParser,controller.resetPassword);
 
 module.exports = router;
