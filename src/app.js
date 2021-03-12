@@ -8,8 +8,6 @@ app.use(
     '/auth',
     auth,
   );
-  
- // app.use(authmiddlewares.checkTokenSetUser);
   app.use(
     '/author',
     author,

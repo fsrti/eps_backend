@@ -12,15 +12,16 @@ const get = (req, res) => {
   });
 };
 
-
 const newsubmissionData = async (req, res, next) => {
 
   try {
-    req.body.userId = req.userId;
-    console.log(`user id` + req.body.userId);
-    //let result;
+    req.body.ref_id = req.userId;
+    this.id=req.userId;
+    console.log(`ref id` + req.body.ref_id);
+
     let newsubmission = new Newsubmission(req.body);
     console.log(`data` + newsubmission);
+
     newsubmission.save((err, newuser) => {
       if (err) {
         console.log(err)
@@ -40,8 +41,8 @@ const newsubmissionData = async (req, res, next) => {
 const newfilesubmissionData = async (req, res, next) => {
 
   try {
-    req.body.userId = req.userId;
-    console.log(`user id` + req.body.userId);
+    req.body.ref_id = this.id ;
+    console.log(`ref id` + req.body.ref_id);
     let result;
     if (req.file)
       result = await cloudinary.uploader.upload(req.file.path);
@@ -52,6 +53,7 @@ const newfilesubmissionData = async (req, res, next) => {
     let newfilesubmission = new NewFilesubmission({
       avatar: result.secure_url,
       cloudinary_id: result.public_id,
+      ref_id:this.id,
     });
     console.log(`data` + newfilesubmission);
     newfilesubmission.save((err, newuser) => {
@@ -98,13 +100,13 @@ const articleFileSubmission = async (req, res, next) => {
       console.log(`upload plzzz`);
     console.log(`result` + result);
     delete req.body.image;
-    let articleFileSubmission = new ArticleFileSubmission({
+    let articlefilesubmission = new ArticleFileSubmission({
       avatar: result.secure_url,
       cloudinary_id: result.public_id,
+      ref_id:this.id,
     });
-    
-    console.log(`data` + articleFileSubmission);
-    articleFileSubmission.save((err, newuser) => {
+    console.log(`data` + articlefilesubmission);
+    articlefilesubmission.save((err, newuser) => {
       if (err) {
         console.log(err)
         res.json({ success: false, msg: 'failed to register user' });
