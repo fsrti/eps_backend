@@ -24,6 +24,13 @@ router.post(
   controller.newfilesubmissionData,
 );
 
-
+router.post(
+  '/articlefilesubmission', jsonParser,upload.single("article"),
+  controller.articleFileSubmission,
+);
+router.post(
+  '/articlesubmission', jsonParser,
+  controller.articleSubmissionData,
+);
 
 module.exports = router;
