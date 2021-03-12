@@ -5,9 +5,9 @@ const _ = require('lodash');
 require('dotenv').config();
 const transporter = require('../utilities/nodemailer');
 
-const mailgun = require("mailgun-js");
-const DOMAIN = 'sandboxb3b9a41822114aa8b0c680f2cf6e2690.mailgun.org';
-const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN });
+// const mailgun = require("mailgun-js");
+// const DOMAIN = 'sandboxb3b9a41822114aa8b0c680f2cf6e2690.mailgun.org';
+// const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN });
 // console.log(apiKey);
 const createTokenSendResponse = (user, res, next) => {
   const payload = {
