@@ -24,6 +24,15 @@ router.post(
   controller.newfilesubmissionData,
 );
 
+router.post(
+  '/articlefilesubmission', jsonParser,upload.single("article"),
+  controller.articleFileSubmission,
+);
+
+router.post(
+  '/articlesubmission', jsonParser,
+  controller.articleSubmissionData,
+);
 router.get('/newsubmission/:id', jsonParser,
   authmiddlewares.checkTokenSetUser,
   authmiddlewares.findNewsubmission(defaultLoginError, (user) => !(user))
