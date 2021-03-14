@@ -3,8 +3,6 @@ const NewFilesubmission = require('./newfilesubmission');
 const Articlesubmission = require('./articlesubmission');
 const ArticleFileSubmission = require('./articlefilesubmission');
 const cloudinary = require("../utilities/cloudinary");
-const upload = require("../utilities/multer");
-const { any } = require('../utilities/multer');
 
 const get = (req, res) => {
   res.json({
@@ -70,18 +68,33 @@ const newfilesubmissionData = async (req, res, next) => {
     next(error);
   }
 };
-
+const getArticlesData = async (req,res,next) => {
+  try{
+    const articles = await Articlesubmission.find({});
+    let data = [];
+    articles.forEach(function(ff){
+      if(ff.isTrue && ff.isTrue==true ) {
+        data.push(ff);
+      }
+    });
+    console.log(data);
+    res.json(data);
+  }catch(err){
+    next(err);
+  }
+};
 const  articleSubmissionData = async (req, res, next) => {
   try {
     let articleSubmission = new Articlesubmission(req.body);
-    console.log(`data` + articleSubmission);
-    articleSubmission.save((err, newuser) => {
+    console.log(`data` , articleSubmission);
+    articleSubmission.save((err, result) => {
       if (err) {
         console.log(err)
         res.json({ success: false, msg: 'failed to register user' });
       }
       else {
-        res.json({ success: true });
+        result.success = true;
+        res.json(result);
       }
     });
   } catch (error) {
@@ -94,25 +107,46 @@ const  articleSubmissionData = async (req, res, next) => {
 const articleFileSubmission = async (req, res, next) => {
   try {
     let result;
+    console.log("req.body.formId = " ,req.body.formId );
     if (req.file)
-      result = await cloudinary.uploader.upload(req.file.path);
+      result = await cloudinary.uploader.upload(req.file.path,{
+        folder:'Articles'
+      });
     else
       console.log(`upload plzzz`);
-    console.log(`result` + result);
+    console.log(`result` , result);
     delete req.body.image;
     let articlefilesubmission = new ArticleFileSubmission({
       avatar: result.secure_url,
       cloudinary_id: result.public_id,
       ref_id:this.id,
+      formId:req.body.formId,
     });
     console.log(`data` + articlefilesubmission);
-    articlefilesubmission.save((err, newuser) => {
+    articlefilesubmission.save(async (err, result) => {
       if (err) {
         console.log(err)
-        res.json({ success: false, msg: 'failed to register user' });
+        res.json({ success: false, msg: 'failde to uplad file' });
       }
       else {
-        res.json({ success: true });
+        // result.success = true;
+        // console.log("result - lno 121 " , result);
+        const update = {
+          fileId : result._id,
+          fileUrl : result.avatar,
+        }
+        Articlesubmission.findOneAndUpdate(
+          {_id:result.formId} , 
+          {$set:update},
+          {new:true},(err, doc) =>{
+            if(err){
+              console.log("error error error error" , err);
+            }
+            else {
+              console.log(doc.fileId , " " ,doc.fileUrl);
+            }
+          });
+        res.json(result);
       }
     });
   } catch (error) {
@@ -126,5 +160,6 @@ module.exports = {
   newsubmissionData,
   newfilesubmissionData,
   articleSubmissionData,
-  articleFileSubmission
+  articleFileSubmission,
+  getArticlesData
 };

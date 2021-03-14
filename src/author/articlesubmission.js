@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const articlesubmissionSchema = new mongoose.Schema(
     {
-        articlename: {
+        title: {
             type: String
         },
         keywords: {
@@ -10,20 +10,26 @@ const articlesubmissionSchema = new mongoose.Schema(
         abstract: {
             type: String
         },
-        authors:
+        author:
         {
             type: String
         },
-        aboutauthor: {
+        aboutAuthor: {
             type: String
         },
-        date: {
-            type: Date
+        receivedDate: {
+            type: String
         },
-        filename:{
+        fileId:{
             type:String
-        }
-    }
-);
+        },
+        fileUrl: {
+            type:String
+        },
+        isTrue: {
+            type:Boolean,
+            default:false,
+        },
+    },{timestamps: true});
 const Articlesubmission = mongoose.model('articlesubmission', articlesubmissionSchema);
 module.exports = Articlesubmission;

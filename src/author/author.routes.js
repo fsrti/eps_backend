@@ -33,6 +33,11 @@ router.post(
   '/articlesubmission', jsonParser,
   controller.articleSubmissionData,
 );
+
+router.get(
+  '/articles',jsonParser,
+  controller.getArticlesData,
+);
 router.get('/newsubmission/:id', jsonParser,
   authmiddlewares.checkTokenSetUser,
   authmiddlewares.findNewsubmission(defaultLoginError, (user) => !(user))
