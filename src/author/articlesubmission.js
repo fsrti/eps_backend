@@ -13,7 +13,7 @@ const articlesubmissionSchema = new mongoose.Schema(
         research:{
             type: String
         },
-        journal_name:{
+        jname:{
             type: String
         },
         author:
