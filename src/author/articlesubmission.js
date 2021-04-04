@@ -39,6 +39,7 @@ const articlesubmissionSchema = new mongoose.Schema(
         citethisArticle: {
             type: String
         },
+        item_id:{type:String}
     },{timestamps: true});
 const Articlesubmission = mongoose.model('articlesubmission', articlesubmissionSchema);
 module.exports = Articlesubmission;
