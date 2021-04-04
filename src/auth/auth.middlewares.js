@@ -88,6 +88,7 @@ const findUser = (defaultLoginError, isError, errorCode = 422) => async (req, re
     }
   };
 
+
   const findNewfilesubmission = (defaultLoginError, isError, errorCode = 422) => async (req, res, next) => {
     try {
       const userFile = await Newfilesubmission.findOne({ ref_id: req.params.id});
@@ -126,5 +127,6 @@ module.exports={
     checkTokenSetUser,
     findId,
     findNewsubmission,
-    findNewfilesubmission
+    findNewfilesubmission,
+   
 }

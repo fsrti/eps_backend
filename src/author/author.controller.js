@@ -36,6 +36,17 @@ const newsubmissionData = async (req, res, next) => {
 
 };
 
+const displayArticle = async (req,res,next) => {
+  try{ 
+    const article = await Articlesubmission.findOne({item_id:req.params.id});
+    console.log('find new article data '+article);
+      res.json(JSON.stringify(article));
+} catch (error) {
+  res.status(500);
+  next(error);
+}
+};
+
 const newfilesubmissionData = async (req, res, next) => {
 
   try {
@@ -161,5 +172,6 @@ module.exports = {
   newfilesubmissionData,
   articleSubmissionData,
   articleFileSubmission,
-  getArticlesData
+  getArticlesData,
+  displayArticle
 };

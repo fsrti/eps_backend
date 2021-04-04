@@ -38,6 +38,9 @@ router.get(
   '/articles',jsonParser,
   controller.getArticlesData,
 );
+router.get('/articles/:id', jsonParser,
+ controller.displayArticle);
+
 router.get('/newsubmission/:id', jsonParser,
   authmiddlewares.checkTokenSetUser,
   authmiddlewares.findNewsubmission(defaultLoginError, (user) => !(user))
