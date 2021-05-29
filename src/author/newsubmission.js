@@ -15,7 +15,7 @@ const newsubmissionSchema = new mongoose.Schema(
                 auth_firstname:String,
                 auth_lastname:String,
                 auth_middlename:String, 
-                author_email:String,
+                auth_email:String,
                 degree:String,
                 affiliation:String
            }

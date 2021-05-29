@@ -39,6 +39,14 @@ const articlesubmissionSchema = new mongoose.Schema(
         citethisArticle: {
             type: String
         },
+        views:{
+            type:Number,
+            default:0
+        },
+        downloads:{
+            type:Number,
+            default:0
+        },
         item_id:{type:String}
     },{timestamps: true});
 const Articlesubmission = mongoose.model('articlesubmission', articlesubmissionSchema);

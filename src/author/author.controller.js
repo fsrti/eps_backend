@@ -39,8 +39,31 @@ const newsubmissionData = async (req, res, next) => {
 const displayArticle = async (req,res,next) => {
   try{ 
     const article = await Articlesubmission.findOne({item_id:req.params.id});
-    console.log('find new article data '+article);
-      res.json(JSON.stringify(article));
+    let view = article.views;
+    Articlesubmission.updateOne({item_id:req.params.id},{$set:{views:view+1}}, 
+      function(err, results) {
+        console.log(results.result);
+    });
+    const updatedArticle = await Articlesubmission.findOne({item_id:req.params.id});
+    console.log('find new article data '+updatedArticle);
+      res.json(JSON.stringify(updatedArticle));
+} catch (error) {
+  res.status(500);
+  next(error);
+}
+};
+
+const downloadArticle = async (req,res,next) => {
+  try{ 
+    const article = await Articlesubmission.findOne({item_id:req.params.id});
+    let download = article.downloads;
+    Articlesubmission.updateOne({item_id:req.params.id},{$set:{downloads:download+1}}, 
+      function(err, results) {
+        console.log(results.result);
+    });
+    const updatedArticle = await Articlesubmission.findOne({item_id:req.params.id});
+    console.log('download Article '+updatedArticle);
+      res.json(JSON.stringify(updatedArticle));
 } catch (error) {
   res.status(500);
   next(error);
@@ -173,5 +196,6 @@ module.exports = {
   articleSubmissionData,
   articleFileSubmission,
   getArticlesData,
-  displayArticle
+  displayArticle,
+  downloadArticle
 };
