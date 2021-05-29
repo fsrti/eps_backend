@@ -51,4 +51,6 @@ router.get('/newfilesubmission/:id', jsonParser,
   authmiddlewares.findNewfilesubmission(defaultLoginError, (user) => !(user))
 );
 
+router.get('/downloads/:id',jsonParser, controller.downloadArticle);
+
 module.exports = router;
