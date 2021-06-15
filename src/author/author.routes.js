@@ -38,6 +38,12 @@ router.get(
   '/articles',jsonParser,
   controller.getArticlesData,
 );
+
+router.get(
+  '/download',jsonParser,
+  controller.getDownloadData,
+);
+
 router.get('/articles/:id', jsonParser,
  controller.displayArticle);
 
