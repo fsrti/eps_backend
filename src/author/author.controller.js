@@ -70,6 +70,8 @@ const downloadArticle = async (req,res,next) => {
 }
 };
 
+
+
 const newfilesubmissionData = async (req, res, next) => {
 
   try {
@@ -121,6 +123,22 @@ const getArticlesData = async (req,res,next) => {
 const getDownloadData = async (req,res,next) => {
   try{
     const articles = await Articlesubmission.find({}).sort({"downloads":-1,"item_id":1});
+    let data = [];
+    articles.forEach(function(ff){
+      if(ff.isTrue && ff.isTrue==true ) {
+        data.push(ff);
+      }
+    });
+    console.log("this is" + data);
+    res.json(data);
+  }catch(err){
+    next(err);
+  }
+};
+
+const getViewsData = async (req,res,next) => {
+  try{
+    const articles = await Articlesubmission.find({}).sort({"views":-1,"item_id":1});
     let data = [];
     articles.forEach(function(ff){
       if(ff.isTrue && ff.isTrue==true ) {
@@ -214,6 +232,7 @@ module.exports = {
   articleFileSubmission,
   getArticlesData,
   getDownloadData,
+  getViewsData,
   displayArticle,
   downloadArticle
 };

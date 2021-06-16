@@ -44,6 +44,11 @@ router.get(
   controller.getDownloadData,
 );
 
+router.get(
+  '/views',jsonParser,
+  controller.getViewsData,
+);
+
 router.get('/articles/:id', jsonParser,
  controller.displayArticle);
 
