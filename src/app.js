@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const cors =require('cors')
+const cors =require('cors');
 const auth = require('./auth/auth.routes');
 const author = require('./author/author.routes');
 app.use(cors());
